@@ -1,0 +1,93 @@
+﻿@model IEnumerable<ASP.NET_CORE_CRUD.Models.Employee>
+
+@{
+    ViewData["Title"] = "Employee Details (CRUD DEMO)";
+}
+
+<h3>Employee Details (CRUD DEMO)</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MobileNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailID)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmployeeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MobileNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmailID)
+                </td>
+                <td>                                        
+                    @using (Html.BeginForm("Delete", "Employee", FormMethod.Post, new { id = "myForm" }))
+                    {                        
+                        @Html.Hidden("id",null,new{id="idField"})
+                        @Html.ActionLink("Edit", "Edit", new { id=item.EmployeeId}) <strong>|</strong>
+                        @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeId }, new { onClick = "confirmDelete("+item.EmployeeId+");return false;"})
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<script>
+    function confirmDelete(id) {
+      let text = "Are you sure you want to delete ?";
+      if (confirm(text) == true) {
+        document.getElementById('idField').value = id;
+          document.getElementById('myForm').submit();
+      }
+    }
+</script>
